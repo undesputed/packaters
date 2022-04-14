@@ -7,6 +7,9 @@ const HomeScreen = ({navigation}) => {
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  const onClickServices = (id) => {
+    navigation.navigate('ServiceScreen', {service_id: id});
+  }
 
   useEffect(() => {
     // let get = AsyncStorage.getItem('user_id');
@@ -16,7 +19,7 @@ const HomeScreen = ({navigation}) => {
     //   navigation.replace('Auth');
     // }
 
-    fetch('http://192.168.1.101:3000/api/retrieve/services')
+    fetch('http://192.168.1.5:3000/api/retrieve/services')
         .then(response => response.json())
         .then((responseJson) => {
           console.log(responseJson);
@@ -33,7 +36,7 @@ const HomeScreen = ({navigation}) => {
         data={services}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({item}) => 
-          <TouchableOpacity style={styles.card}>
+          <TouchableOpacity style={styles.card} onPress={() => onClickServices(item.id)}>
             <Image
               style={styles.thumb}
               source={item.path_image}

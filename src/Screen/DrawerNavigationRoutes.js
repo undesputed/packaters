@@ -18,7 +18,7 @@ const homeScreenStack = ({navigation}) => {
                 name="HomeScreen"
                 component={HomeScreen}
                 options={{
-                    title: 'Choose a services',
+                    title: 'Home Screen',
                     headerLeft: () => (
                         <NavigationDrawerHeader navigationProps={navigation} />
                     ),
