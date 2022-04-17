@@ -54,7 +54,7 @@ const RegisterScreen = (props) => {
         //   }
 
           setLoading(true);
-          fetch('http://192.168.1.5:3000/api/user/registration', {
+          fetch('http://192.168.0.101:3000/api/user/registration', {
               method: 'POST',
               headers: {
                 //Header Defination

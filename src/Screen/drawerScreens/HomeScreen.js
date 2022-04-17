@@ -3,7 +3,6 @@ import {View, Text, SafeAreaView, FlatList, StyleSheet, TouchableOpacity, Image}
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HomeScreen = ({navigation}) => {
-  const [products, setProducts] = useState([]);
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -19,7 +18,7 @@ const HomeScreen = ({navigation}) => {
     //   navigation.replace('Auth');
     // }
 
-    fetch('http://192.168.1.5:3000/api/retrieve/services')
+    fetch('http://192.168.0.101:3000/api/retrieve/services')
         .then(response => response.json())
         .then((responseJson) => {
           console.log(responseJson);
@@ -39,12 +38,12 @@ const HomeScreen = ({navigation}) => {
           <TouchableOpacity style={styles.card} onPress={() => onClickServices(item.id)}>
             <Image
               style={styles.thumb}
-              source={item.path_image}
+              source={{uri:item.service_image}}
             />
             <View style={styles.infoContainer}>
               <Text style={styles.name}>{item.service_name}</Text>
               <Text style={styles.caterer}>Caterer: {item.cat_name}</Text>
-              <Text style={styles.price}>$ {item.service_price}</Text>
+              <Text style={styles.price}>Price : $ {item.service_price}</Text>
             </View>
           </TouchableOpacity>
         }

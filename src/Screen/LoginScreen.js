@@ -37,7 +37,7 @@ const LoginScreen = ({navigation}) => {
     setLoading(true);
     let dataToSend = {username: username, password: userPassword};
 
-    fetch('http://192.168.1.5:3000/api/user/login', {
+    fetch('http://192.168.0.101:3000/api/user/login', {
       method: 'POST',
       headers: {
         //Header Defination

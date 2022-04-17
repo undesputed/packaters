@@ -1,14 +1,23 @@
 // Import React and Component
 import React, {useState, useEffect} from 'react';
-import {View, Text, SafeAreaView} from 'react-native';
+import {View, Text, SafeAreaView, StyleSheet, FlatList, TouchableOpacity, Image} from 'react-native';
 
 const ServiceScreen = ({route, navigation}) => {
   const [service, setService] = useState([]);
+  const [menu, setMenu] = useState([]);
+  const [serviceId, setServiceId] = useState();
+
+  const onClickPlaceOrder = (id) => {
+    navigation.navigate('OrderScreen', {service_id: id});
+  }
 
   useEffect(() => {
-    alert(route.params.service_id);
-    fetch('http://192.168.1.101:3000/api/retrieve/services',{
+    fetch('http://192.168.0.101:3000/api/retrieve/services',{
       method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify({
         id: route.params.service_id,
       }),
@@ -16,53 +25,82 @@ const ServiceScreen = ({route, navigation}) => {
       .then((response) => response.json())
       .then((responseJson) => {
         console.log(responseJson);
-        setService[responseJson];
+        setServiceId(route.params.service_id);
+        setService(responseJson);
       })
       .catch((error) => {
         console.log(error);
-      })
-  },[])
+      });
 
+      fetch('http://192.168.0.101:3000/api/retrieve/menu',{
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id: route.params.service_id,
+        }),
+      })
+        .then((response) => response.json())
+        .then((responseJson) => {
+          console.log(responseJson);
+          setMenu(responseJson);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },[]);
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      <View style={{flex: 1, padding: 16}}>
-        <View
-          style={{
-            flex: 1,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
-          <Text
-            style={{
-              fontSize: 20,
-              textAlign: 'center',
-              marginBottom: 16,
-            }}>
-            Example of Splash, Login and Sign Up in React Native
-            {'\n\n'}
-            This is the Settings Screen
-          </Text>
-        </View>
-        <Text
-          style={{
-            fontSize: 18,
-            textAlign: 'center',
-            color: 'grey',
-          }}>
-          Splash, Login and Register Example{'\n'}React Native
-        </Text>
-        <Text
-          style={{
-            fontSize: 16,
-            textAlign: 'center',
-            color: 'grey',
-          }}>
-          www.aboutreact.com
-        </Text>
-      </View>
+      <FlatList
+        data={service}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={({item}) => 
+          <View style={styles.serviceContainer}>
+            <Image
+              style={styles.service_image}
+              source={{uri:item.service_image}}
+            />
+            <View style={styles.infoCOntainer}>
+              <Text style={styles.service_name}>{item.service_name}</Text>
+              <Text style={styles.description}>{item.description}</Text>
+              <Text style={styles.price}>{item.service_price}</Text>
+            </View>
+            <View style={styles.catererContainer}>
+              <Image
+                style={styles.cat_image}
+                source={{uri:item.cat_image}}
+              />
+              <Text style={styles.cat_name}>{item.cat_name}</Text>
+              <Text style={styles.cat_address}>{item.cat_address}</Text>
+              <Text style={styles.cat_contactno}>{item.cat_contactno}</Text>
+              <Text style={styles.cat_details}>{item.cat_details}</Text>
+            </View>
+          </View>
+        }
+      />
+      <Text style={styles.menuTitle}>Menu List</Text>
+      <FlatList
+        data={menu}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={({item}) =>
+          <View>
+            <Text>{item.menu_name}</Text>
+            <Text>{item.menu_details}</Text>
+          </View>
+        }
+      />
+      <TouchableOpacity style={styles.placeOrderContainer} onPress={() => onClickPlaceOrder(serviceId)}>
+        <Text style={styles.placeOrder}>Place Order</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
 
 export default ServiceScreen;
+
+const styles = StyleSheet.create({
+
+});
