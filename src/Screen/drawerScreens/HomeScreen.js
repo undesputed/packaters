@@ -18,7 +18,7 @@ const HomeScreen = ({navigation}) => {
     //   navigation.replace('Auth');
     // }
 
-    fetch('http://192.168.0.101:3000/api/retrieve/services')
+    fetch('http://192.168.0.173:3000/api/retrieve/services')
         .then(response => response.json())
         .then((responseJson) => {
           console.log(responseJson);

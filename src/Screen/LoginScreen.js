@@ -37,7 +37,7 @@ const LoginScreen = ({navigation}) => {
     setLoading(true);
     let dataToSend = {username: username, password: userPassword};
 
-    fetch('http://192.168.0.101:3000/api/user/login', {
+    fetch('http://192.168.0.173:3000/api/user/login', {
       method: 'POST',
       headers: {
         //Header Defination
@@ -85,10 +85,10 @@ const LoginScreen = ({navigation}) => {
               <Image
                 source={require('../Image/logo.png')}
                 style={{
-                  width: '50%',
-                  height: 100,
+                  width: '100%',
+                  height: 200,
                   resizeMode: 'contain',
-                  margin: 30,
+                  margin: 20,
                 }}
               />
             </View>
@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
   mainBody: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#307ecc',
+    backgroundColor: '#656464',
     alignContent: 'center',
   },
   SectionStyle: {

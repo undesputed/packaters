@@ -60,7 +60,7 @@ const App = () => {
         <Stack.Screen
           name="ServiceScreen"
           component={ServiceScreen}
-          options={{headerShown: true}}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="OrderScreen"
