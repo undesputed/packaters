@@ -4,9 +4,11 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import HomeScreen from './drawerScreens/HomeScreen';
-import SettingsScreen from './drawerScreens/SettingScreen';
 import CustomSidebarMenu from './Component/CustomSideBarMenu';
 import NavigationDrawerHeader from './Component/NavigationDrawerHeader';
+import MenuScreen from './drawerScreens/MenuScreen';
+import TransactionHistoryScreen from './drawerScreens/TransactionHistory';
+import ProfileScreen from './drawerScreens/ProfileScreen';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -23,7 +25,7 @@ const HomeScreenStack = ({navigation}) => {
                         <NavigationDrawerHeader navigationProps={navigation} />
                     ),
                     headerStyle:{
-                        backgroundColor: '#307ecc',
+                        backgroundColor: '#e48f24',
                     },
                     headerTintColor: '#fff',
                     headerTitleStyle: {
@@ -35,32 +37,87 @@ const HomeScreenStack = ({navigation}) => {
     )
 }
 
-const SettingScreenStack = ({navigation}) => {
-    return (
+
+  const MenuScreenStack = ({navigation}) => {
+    return(
       <Stack.Navigator
-        initialRouteName="SettingsScreen"
-        screenOptions={{
-          headerLeft: () => (
-            <NavigationDrawerHeader navigationProps={navigation} />
-          ),
-          headerStyle: {
-            backgroundColor: '#307ecc', //Set Header color
+        initialRouteName='="MenuScreen'
+        screenOptions={{ 
+          headerStyle:{
+            backgroundColor: '#e48f24',
           },
-          headerTintColor: '#fff', //Set Header text color
+          headerTintColor: '#fff',
           headerTitleStyle: {
-            fontWeight: 'bold', //Set Header text style
-          },
-        }}>
-        <Stack.Screen
-          name="SettingsScreen"
-          component={SettingsScreen}
-          options={{
-            title: 'Settings', //Set Header Title
-          }}
-        />
+              fontWeight: 'bold',
+          }
+         }}>
+          <Stack.Screen
+            name="MenuScreen"
+            component={MenuScreen}
+            options={{
+              title: 'Menu', //Set Header Title
+              headerLeft: () => (
+                <NavigationDrawerHeader navigationProps={navigation} />
+            ),
+            }}
+          />
       </Stack.Navigator>
     );
   };
+
+  const TransactionHistoryScreenStack = ({navigation}) => {
+    return(
+      <Stack.Navigator 
+        initialRouteName='TransactionHistoryScreen'
+        screenOptions={{ 
+          headerStyle:{
+            backgroundColor: '#e48f24',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+              fontWeight: 'bold',
+          }
+         }}>   
+          <Stack.Screen
+            name="TransactionHistoryScreen"
+            component={TransactionHistoryScreen}
+            options={{
+              title: 'History', //Set Header Title
+              headerLeft: () => (
+                <NavigationDrawerHeader navigationProps={navigation} />
+            ),
+            }}
+          />
+      </Stack.Navigator>
+    )
+  }
+
+  const ProfileScreenStack = ({navigation}) => {
+    return(
+      <Stack.Navigator
+        initialRouteName='ProfileScreen'
+        screenOptions={{ 
+          headerStyle:{
+            backgroundColor: '#e48f24',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+              fontWeight: 'bold',
+          }
+         }}>
+           <Stack.Screen
+            name="ProfielScreen"
+            component={ProfileScreen}
+            options={{
+              title: 'Profile', //Set Header Title
+              headerLeft: () => (
+                <NavigationDrawerHeader navigationProps={navigation} />
+            ),
+            }}
+          />
+      </Stack.Navigator>
+    )
+  }
 
   const DrawerNavigatorRoutes = (props) => {
     return (
@@ -76,14 +133,24 @@ const SettingScreenStack = ({navigation}) => {
         screenOptions={{ headerShown: false }}
         drawerContent={CustomSidebarMenu}>
         <Drawer.Screen
-          name="HomeScreenStack"
+          name="Home"
           screenOptions={{drawerLabel: 'Home Screen'}}
           component={HomeScreenStack}
         />
         <Drawer.Screen
-          name="SettingScreenStack"
-          screenOptions={{drawerLabel: 'Setting Screen'}}
-          component={SettingScreenStack}
+          name="Menu"
+          screenOptions={{drawerLabel: 'Menu Screen'}}
+          component={MenuScreenStack}
+        />
+        <Drawer.Screen
+          name="Transaction History"
+          screenOptions={{drawerLabel: 'Transaction History Screen'}}
+          component={TransactionHistoryScreenStack}
+        />
+        <Drawer.Screen
+          name="Profile"
+          screenOptions={{drawerLabel: 'Profile Screen'}}
+          component={ProfileScreenStack}
         />
       </Drawer.Navigator>
     );

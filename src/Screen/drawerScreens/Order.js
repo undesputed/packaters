@@ -12,9 +12,13 @@ import {Platform,
   Dimensions,
   Modal,
   SafeAreaView,
-  Button
+  Button,
+  FlatList,
 } from 'react-native';
-import {WebView} from 'react-native-webview'
+import {WebView} from 'react-native-webview';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import MaterialCard5 from "../../components/MaterialCard5";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 const Window = {
   width: Dimensions.get('window').width,
@@ -26,12 +30,47 @@ const OrderScreen = ({route, navigation}) => {
   const [price, setPrice] = useState('');
   const [status, setStatus] = useState('Pending');
   const [payment, setPayment] = useState([]);
+  const [serviceId, setServiceId] = useState();
+  const [services, setServices] = useState([]);
+  const [customerId, setCustomerId] = useState();
+  const [address, setAddress] = useState('');
+  const [time, setTime] = useState('');
+  const [date, setDate] = useState(new Date());
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
+
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const handleConfirm = (date) => {
+    console.warn("A date has been picked: ", date);
+    hideDatePicker();
+  };
+
+  const showTimePIcker = () => {
+    setTimePickerVisibility(true);
+  }
+
+  const hideTimePicker = () => {
+    setTimePickerVisibility(false);
+  }
+
+  const handleTimeConfirm = (time) => {
+    console.log("A time has been picked: ", time);
+    hideTimePicker();
+  }
 
   const onClickShowModal = (data) => {
     if(data.title === 'success'){
       setShowModal(false);
       setStatus('Completed');
-      console.log(data);
+      let url = data.url;
+      console.log(data.url);
     }else if(data.title === 'cancel'){
       setShowModal(false);
       setStatus('Canceled');
@@ -40,8 +79,45 @@ const OrderScreen = ({route, navigation}) => {
     }
   }
 
+  const retrieveData = async () => {
+    try {
+      const valueString = await AsyncStorage.getItem('user_id');
+      const value = valueString;
+      fetch('http://192.168.0.173:3000/api/user/user', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: value
+        }),
+      })
+        .then((response) => response.json())
+        .then((responseJson) => {
+          setCustomerId(responseJson);
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onClickPlaceOrder = (id) => {
+    navigation.navigate('PaymentScreen', {service_id: id});
+  }
+
+  const onClickCancel = () => {
+    navigation.navigate('HomeScreen');
+  }
+
   useEffect(() => {
-    fetch('http://192.168.0.173:3000/api/retrieve/servicePrice', {
+      retrieveData();
+      setServiceId(route.params.service_id);
+
+      fetch('http://192.168.0.173:3000/api/retrieve/servicePrice', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -59,12 +135,81 @@ const OrderScreen = ({route, navigation}) => {
       .catch((error) => {
         console.log(error);
       })
+
+      fetch('http://192.168.0.173:3000/api/retrieve/services',{
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            id: route.params.service_id,
+          }),
+        })
+          .then((response) => response.json())
+          .then((responseJson) => {
+            console.log(responseJson);
+            setServiceId(route.params.service_id);
+            setServices(responseJson);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+
   },[])
 
   return (
     <SafeAreaView style={{flex: 1}}>
       <View style={styles.container}>
-              <ScrollView>
+        <FlatList
+          data={services}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({item}) => 
+            <View>
+              <MaterialCard5 style={styles.materialCard5} item={item}></MaterialCard5>
+            </View>
+          }
+          />
+        <ScrollView>
+          <View style={styles.formContainer}>
+            <TextInput
+              placeholder='Address'
+              onChangeText={(Address) => setAddress(Address)}
+              underlineColorAndroid="#f000"
+              blurOnSubmit={false}
+              autoCapitalize="none"
+              style={styles.addressInput}
+            />
+            <View style={styles.dateButton}>
+              <Button title="Set the Date" onPress={showDatePicker} color="#e48f24"/>
+                <DateTimePickerModal
+                  isVisible={isDatePickerVisible}
+                  mode="date"
+                  onConfirm={handleConfirm}
+                  onCancel={hideDatePicker}
+                />
+            </View>
+            <View style={styles.timeButton}>
+              <Button title="Set the Time" onPress={showTimePIcker} color="#e48f24"/>
+                <DateTimePickerModal
+                  isVisible={isTimePickerVisible}
+                  mode="time"
+                  onConfirm={handleTimeConfirm}
+                  onCancel={hideTimePicker}
+                />
+            </View>
+          </View>
+        </ScrollView>
+
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.cancelContainer} onPress={() => onClickCancel()}>
+            <Text style={styles.placeOrder}>CANCEL</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.placeOrderContainer} onPress={() => onClickPlaceOrder(serviceId)}>
+            <Text style={styles.placeOrder}>PLACE ODER</Text>
+          </TouchableOpacity>
+        </View>
+              {/* <ScrollView>
                   <View style={{height: 5, width:Window.width}}/>
                   <View style={styles.titleContainer}>
                     <Text style={styles.yourParment}>Payment</Text>
@@ -103,21 +248,7 @@ const OrderScreen = ({route, navigation}) => {
                         />
                         </TouchableOpacity>
                     </View>
-              </ScrollView>
-              <View style={{position: 'absolute', left: 0, right: 0, bottom: 0}}>
-                <View style={{backgroundColor: '#69B1B3', flex: 1}}>
-                        <View style={{widht: 350,flexDirection: 'row'}}>
-                            <Text style={{paddingTop: 14, paddingLeft: 14, paddingBottom: 14, paddingRight: 5}}>Amount:</Text>
-                            <Text style={{fontWeight: 'bold', paddingTop: 14, paddingBottom: 14}}>₱{price}</Text>
-                        </View>
-                    </View>
-                <View style={{backgroundColor: 'pink', flex: 1}}>
-                    <View style={{widht: 350,flexDirection: 'row'}}>
-                        <Text style={{paddingTop: 14, paddingLeft: 14, paddingBottom: 14, paddingRight: 5}}>Status:</Text>
-                        <Text style={{fontWeight: 'bold', paddingTop: 14, paddingBottom: 14}}>Select Payment</Text>
-                    </View>
-                </View>
-              </View>
+              </ScrollView> */}
           </View>
     </SafeAreaView>
   );
@@ -129,39 +260,72 @@ export default OrderScreen;
 const styles = StyleSheet.create({
   container: {
       flex: 1,
-      backgroundColor: '#ccc'
+      backgroundColor: '#fff'
   },
-  titleContainer: {
-      elevation: 3,
-      paddingBottom: 3,
-      alignSelf: 'center',
-      width: Window.width - 10,
-      borderRadius: 3,
-      backgroundColor: 'white'
+  formContainer:{
+    backgroundColor: 'white',
+    marginTop: 1,
+    width: '100%',
   },
-  yourParment:{
-      padding: 10,
-      fontSize: 18,
-      fontWeight: 'bold'
+  addressInput: {
+    width: 330,
+    alignSelf: 'center',
+    height: 39,
+    color: 'black',
+    borderRadius: 5,
+    borderWidth: 1,
+    borderStyle: 'solid',
+    borderColor: "rgba(150, 150, 150, 1)",
   },
-  paymentContainer: {
-      elevation: 3,
-      paddingBottom: 3,
-      alignSelf: 'center',
-      width: Window.width - 10,
-      borderRadius: 3,
-      backgroundColor: 'white',
-      flex: 1,
-      flexDirection: 'row'
-  }
-  // paymentContainer:{
-  //     elevation: 3,
-  //     paddingBottom: 3,
-  //     alignSelf: 'center',
-  //     width: Window.Width - 10,
-  //     borderRadius: 3,
-  //     backgroundColor: 'white',
-  //     flex:1 ,
-  //     flexDirection: 'row'
-  // },
+  dateButton: {
+    width: 330,
+    alignSelf: 'center',
+    height: 39,
+    color: 'white',
+    backgroundColor: "#e48f24",
+    marginTop: 10,
+    marginBottom: 5,
+    borderRadius: 5,
+  },
+  timeButton: {
+    width: 330,
+    alignSelf: 'center',
+    height: 39,
+    color: 'white',
+    backgroundColor: "#e48f24",
+    marginTop: 5,
+    marginBottom: 5,
+    borderRadius: 5,
+  },
+
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  placeOrderContainer: {
+    elevation: 8,
+    backgroundColor: "#422517",
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    fontSize: 18,
+    width: '50%',
+    alignContent: 'center',
+    fontWeight: "bold",
+    alignItems: "center",
+    color: '#fff',
+  },
+  cancelContainer: {
+    elevation: 8,
+    alignItems: 'center',
+    backgroundColor: "#e48f24",
+    paddingVertical: 10,
+    width: '50%',
+    paddingHorizontal: 12,
+    fontSize: 18,
+    fontWeight: "bold",
+    alignSelf: "center",
+  },
+  placeOrder: {
+    color: 'white'
+  },
 });
