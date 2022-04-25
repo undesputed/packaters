@@ -303,8 +303,7 @@ const LoginScreen = ({navigation}) => {
           placeholder="Username"
           textBreakStrategy="simple"
           onChangeText={(Username) => setUsername(Username)}
-          style={styles.username}
-        ></TextInput>
+          style={styles.username}/>
         <TextInput
           placeholder="Password"
           textBreakStrategy="simple"
@@ -312,8 +311,7 @@ const LoginScreen = ({navigation}) => {
           secureTextEntry={true}
           onChangeText={(UsePassword) => setUserPassword(UsePassword)}
           blurOnSubmit={true}
-          style={styles.username1}
-        ></TextInput>
+          style={styles.username1}/>
         <TouchableOpacity
           onPress={() => handleSubmitPress()}
           style={styles.button}
