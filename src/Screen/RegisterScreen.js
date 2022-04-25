@@ -14,101 +14,101 @@
 // import Loader from './Component/loader';
 
 // const RegisterScreen = (props) => {
-//     const [username, setUsername] = useState('');
-//     const [firstname, setFirstname] = useState('');
-//     const [lastname, setLastname] = useState('');
-//     const [phonenum, setPhonenum] = useState('');
-//     const [userAge, setUserAge] = useState('');
-//     const [userAddress, setUserAddress] = useState('');
-//     const [userPassword, setUserPassword] = useState('');
-//     const [loading, setLoading] = useState(false);
-//     const [errorText, setErrorText] = useState('');
-//     const [isRegistrationSuccess, setIsRegistrationSuccess] = useState(false);
+    // const [username, setUsername] = useState('');
+    // const [firstname, setFirstname] = useState('');
+    // const [lastname, setLastname] = useState('');
+    // const [phonenum, setPhonenum] = useState('');
+    // const [userAge, setUserAge] = useState('');
+    // const [userAddress, setUserAddress] = useState('');
+    // const [userPassword, setUserPassword] = useState('');
+    // const [loading, setLoading] = useState(false);
+    // const [errorText, setErrorText] = useState('');
+    // const [isRegistrationSuccess, setIsRegistrationSuccess] = useState(false);
 
-//     const emailInputRef = createRef();
-//     const ageInputRef = createRef();
-//     const addressInputRef = createRef();
-//     const passwordInputRef = createRef();
+    // const emailInputRef = createRef();
+    // const ageInputRef = createRef();
+    // const addressInputRef = createRef();
+    // const passwordInputRef = createRef();
 
-//     const handleSubmitButton = () => {
-//         setErrorText('');
-//         // if(!username){
-//         //     alert('Please Fill Username');
-//         //     return;
-//         // }
-//         // if (!userEmail) {
-//         //     alert('Please fill Email');
-//         //     return;
-//         //   }
-//         //   if (!userAge) {
-//         //     alert('Please fill Age');
-//         //     return;
-//         //   }
-//         //   if (!userAddress) {
-//         //     alert('Please fill Address');
-//         //     return;
-//         //   }
-//         //   if (!userPassword) {
-//         //     alert('Please fill Password');
-//         //     return;
-//         //   }
+    // const handleSubmitButton = () => {
+    //     setErrorText('');
+    //     // if(!username){
+    //     //     alert('Please Fill Username');
+    //     //     return;
+    //     // }
+    //     // if (!userEmail) {
+    //     //     alert('Please fill Email');
+    //     //     return;
+    //     //   }
+    //     //   if (!userAge) {
+    //     //     alert('Please fill Age');
+    //     //     return;
+    //     //   }
+    //     //   if (!userAddress) {
+    //     //     alert('Please fill Address');
+    //     //     return;
+    //     //   }
+    //     //   if (!userPassword) {
+    //     //     alert('Please fill Password');
+    //     //     return;
+    //     //   }
 
-//           setLoading(true);
-//           fetch('http://192.168.0.173:3000/api/user/registration', {
-//               method: 'POST',
-//               headers: {
-//                 //Header Defination
-//                 'Accept': 'application/json',
-//                 'Content-Type': 'application/json',
-//                 // 'Content-Type':
-//                 // 'application/x-www-form-urlencoded;charset=UTF-8',
-//               },
-//               body: JSON.stringify({
-//                 firstname: firstname,
-//                 lastname: lastname,
-//                 phonenum: phonenum,
-//                 address: userAddress,
-//                 username: username,
-//                 password: userPassword,
-//               }),
-//           })
-//             .then((response) => response.json())
-//             .then((responseJson) => {
-//                 setLoading(false);
-//                 console.log(responseJson);
-//                 setIsRegistrationSuccess(true);
-//                 console.log('Registration Success. Please Login to proceed');
-//             })
-//             .catch((error) => {
-//                 setLoading(false);
-//                 console.error(error);
-//             });
-//     };
+    //       setLoading(true);
+    //       fetch('http://192.168.0.173:3000/api/user/registration', {
+    //           method: 'POST',
+    //           headers: {
+    //             //Header Defination
+    //             'Accept': 'application/json',
+    //             'Content-Type': 'application/json',
+    //             // 'Content-Type':
+    //             // 'application/x-www-form-urlencoded;charset=UTF-8',
+    //           },
+    //           body: JSON.stringify({
+    //             firstname: firstname,
+    //             lastname: lastname,
+    //             phonenum: phonenum,
+    //             address: userAddress,
+    //             username: username,
+    //             password: userPassword,
+    //           }),
+    //       })
+    //         .then((response) => response.json())
+    //         .then((responseJson) => {
+    //             setLoading(false);
+    //             console.log(responseJson);
+    //             setIsRegistrationSuccess(true);
+    //             console.log('Registration Success. Please Login to proceed');
+    //         })
+    //         .catch((error) => {
+    //             setLoading(false);
+    //             console.error(error);
+    //         });
+    // };
 
-//     if(isRegistrationSuccess){
-//         return(
-//             <View
-//                 style={{
-//                     flex: 1,
-//                     backgroundColor: '#307ecc',
-//                     justifyContent: 'center',
-//                 }}>
-//                     <Image
-//                         source={require('../Image/logo.png')}
-//                         style={{
-//                             height: 150,
-//                             resizeMode: 'contain',
-//                             alignSelf: 'center'}}/>
-//                     <Text style={styles.successTextStyle}>Registration Successful</Text>
-//                     <TouchableOpacity
-//                         style={styles.buttonStyle}
-//                         activeOpacity={0.5}
-//                         onPress={() => props.navigation.navigate('LoginScreen')}>
-//                             <Text style={styles.buttonTextSTyle}>Login Now</Text>
-//                     </TouchableOpacity>
-//             </View>
-//         );
-//     }
+    // if(isRegistrationSuccess){
+    //     return(
+    //         <View
+    //             style={{
+    //                 flex: 1,
+    //                 backgroundColor: '#307ecc',
+    //                 justifyContent: 'center',
+    //             }}>
+    //                 <Image
+    //                     source={require('../Image/logo.png')}
+    //                     style={{
+    //                         height: 150,
+    //                         resizeMode: 'contain',
+    //                         alignSelf: 'center'}}/>
+    //                 <Text style={styles.successTextStyle}>Registration Successful</Text>
+    //                 <TouchableOpacity
+    //                     style={styles.buttonStyle}
+    //                     activeOpacity={0.5}
+    //                     onPress={() => props.navigation.navigate('LoginScreen')}>
+    //                         <Text style={styles.buttonTextSTyle}>Login Now</Text>
+    //                 </TouchableOpacity>
+    //         </View>
+    //     );
+    // }
 
 //     return(
 //         <View style={{flex: 1, backgroundColor: '#307ecc'}}>
@@ -287,66 +287,150 @@
 //     },
 //   });
 
+import React, { Component, useState, useEffect, createRef } from "react";
+import { StyleSheet, View, Image, Text, ScrollView, TextInput, TouchableOpacity } from "react-native";
 
-import React, { Component } from "react";
-import {
-  StyleSheet,
-  View,
-  TouchableOpacity,
-  Image,
-  Text,
-  TextInput,
-  SafeAreaView
-} from "react-native";
-import { Center } from "@builderx/utils";
+const RegisterScreen = ({navigation}) => {
 
-function RegisterScreen(props) {
+  const [username, setUsername] = useState('');
+  const [firstname, setFirstname] = useState('');
+  const [lastname, setLastname] = useState('');
+  const [phonenum, setPhonenum] = useState('');
+  const [confirm, setComfirm] = useState('');
+  const [userAge, setUserAge] = useState('');
+  const [userAddress, setUserAddress] = useState('');
+  const [userPassword, setUserPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [errorText, setErrorText] = useState('');
+  const [isRegistrationSuccess, setIsRegistrationSuccess] = useState(false);
+
+  const emailInputRef = createRef();
+  const ageInputRef = createRef();
+  const addressInputRef = createRef();
+  const passwordInputRef = createRef();
+
+  const handleSubmitButton = ({navigation}) => {
+      setErrorText('');
+        setLoading(true);
+        if(userPassword === confirm){
+          fetch('http://192.168.0.173:3000/api/user/registration', {
+              method: 'POST',
+              headers: {
+                //Header Defination
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                // 'Content-Type':
+                // 'application/x-www-form-urlencoded;charset=UTF-8',
+              },
+              body: JSON.stringify({
+                firstname: firstname,
+                lastname: lastname,
+                phonenum: phonenum,
+                address: userAddress,
+                username: username,
+                password: userPassword,
+              }),
+          })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                setLoading(false);
+                console.log(responseJson);
+                console.log('Registration Success. Please Login to proceed');
+                alert('Registration Success');
+                navigation.navigate('LoginScreen');
+            })
+            .catch((error) => {
+                setLoading(false);
+                console.error(error);
+            });
+        }else {
+          alert('Password does not match');
+        }
+  };
+
+  // if(isRegistrationSuccess){
+  //     return(
+  //         <View
+  //             style={{
+  //                 flex: 1,
+  //                 backgroundColor: '#307ecc',
+  //                 justifyContent: 'center',
+  //             }}>
+  //                 <Image
+  //                     source={require('../Image/logo.png')}
+  //                     style={{
+  //                         height: 150,
+  //                         resizeMode: 'contain',
+  //                         alignSelf: 'center'}}/>
+  //                 <Text style={styles.successTextStyle}>Registration Successful</Text>
+  //                 <TouchableOpacity
+  //                     style={styles.buttonStyle}
+  //                     activeOpacity={0.5}
+  //                     onPress={() => props.navigation.navigate('LoginScreen')}>
+  //                         <Text style={styles.buttonTextSTyle}>Login Now</Text>
+  //                 </TouchableOpacity>
+  //         </View>
+  //     );
+  // }
+
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-        <View style={styles.container}>
-        <TouchableOpacity style={styles.button2}></TouchableOpacity>
+    <View style={styles.container}>
+      <ScrollView style={styles.scrollContainer}>
         <Image
-            source={require("../Image/logo.png")}
-            resizeMode="contain"
-            style={styles.image1}
+          source={require("../Image/logo.png")}
+          resizeMode="contain"
+          style={styles.image}
         ></Image>
-        <Center horizontal>
-            <Text style={styles.registration}>REGISTRATION</Text>
-        </Center>
+        <Text style={styles.registration}>REGISTRATION</Text>
         <TextInput
-            placeholder="First Name"
-            style={styles.username1}
-        ></TextInput>
+          placeholder="First Name"
+          onChangeText={(FirstName) => setFirstname(FirstName)}
+          textBreakStrategy="simple"
+          style={styles.firstName}/>
+        <TextInput
+          placeholder="Last Name"
+          onChangeText={(LastName) => setLastname(LastName)}
+          textBreakStrategy="simple"
+          style={styles.lastname}/>
+        <TextInput
+          placeholder="Phone Number"
+          onChangeText={(PhoneNumber) => setPhonenum(PhoneNumber)}
+          textBreakStrategy="simple"
+          style={styles.phoneNum}/>
+        <TextInput
+          placeholder="Address"
+          onChangeText={(Address) => setUserAddress(Address)}
+          textBreakStrategy="simple"
+          style={styles.address}/>
+        <TextInput
+          placeholder="Username"
+          onChangeText={(Username) => setUsername(Username)}
+          textBreakStrategy="simple"
+          style={styles.username}/>
+        <TextInput
+          placeholder="Password"
+          onChangeText={(Password) => setUserPassword(Password)}
+          textBreakStrategy="simple"
+          secureTextEntry={true}
+          style={styles.password}/>
+        <TextInput
+          placeholder="Confirm Password"
+          onChangeText={(Comfirm) => setComfirm(Comfirm)}
+          textBreakStrategy="simple"
+          secureTextEntry={true}
+          style={styles.confirmPass}/>
         <TouchableOpacity
-            onPress={() => props.navigation.navigate("LoginScreen")}
-            style={styles.button1}
-        ></TouchableOpacity>
-        <Text style={styles.register}>REGISTER</Text>
-        <Text style={styles.newHere1}>New Here?</Text>
-        <Text style={styles.register1}>Login</Text>
-        <TextInput
-            placeholder="Last Name"
-            style={styles.username2}
-        ></TextInput>
-        <TextInput
-            placeholder="Phone Number"
-            style={styles.username3}
-        ></TextInput>
-        <TextInput
-            placeholder="Address"
-            style={styles.username4}
-        ></TextInput>
-        <TextInput
-            placeholder="Username"
-            style={styles.username5}
-        ></TextInput>
-        <TextInput
-            placeholder="Password"
-            secureTextEntry={true}
-            style={styles.username6}
-        ></TextInput>
+          style={styles.button} onPress={handleSubmitButton}>
+          <Text style={styles.login4}>REGISTER</Text>
+        </TouchableOpacity>
+        <View style={styles.labelContainer}>
+          <Text style={styles.haveAnAccount}>Have an account?</Text>
+          <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
+            <Text style={styles.loginLabel}>Login</Text>
+          </TouchableOpacity>
         </View>
-    </SafeAreaView>
+      </ScrollView>
+    </View>
   );
 }
 
@@ -354,47 +438,112 @@ const styles = StyleSheet.create({
   container: {
     flex: 1
   },
-  button2: {
-    top: "85.42%",
-    left: "33.33%",
-    width: "20.22%",
-    height: "2.43%",
-    position: "absolute"
+  scrollContainer: {
+    backgroundColor: "white",
+    width: 360,
+    height: 717
   },
-  image1: {
-    top: "2.16%",
-    width: 100,
-    height: 100,
-    position: "absolute",
+  image: {
+    width: 150,
+    height: 150,
+    marginTop: 10,
     alignSelf: 'center'
   },
   registration: {
-    top: "19.86%",
-    position: "absolute",
-    fontFamily: "roboto-500",
-    color: "#121212",
-    fontSize: 22,
-    letterSpacing: 5
-  },
-  username1: {
-    top: "27.89%",
-    position: "absolute",
     fontFamily: "roboto-regular",
     color: "#121212",
-    height: "6.35%",
-    width: "82.77%",
+    fontSize: 20,
+    letterSpacing: 5,
+    marginTop: 10,
+    alignSelf: 'center'
+  },
+  firstName: {
+    fontFamily: "roboto-regular",
+    color: "#121212",
+    height: 39,
+    width: 300,
     borderWidth: 1,
     borderColor: "rgba(150,150,150,1)",
     borderRadius: 9,
     borderStyle: "solid",
-    fontSize: 16,
-    left: "8.76%"
+    alignSelf: 'center',
+    marginTop: 20
   },
-  button1: {
-    top: "84.74%",
-    width: "83.33%",
-    height: "6.49%",
-    position: "absolute",
+  lastname: {
+    fontFamily: "roboto-regular",
+    color: "#121212",
+    height: 39,
+    width: 300,
+    borderWidth: 1,
+    borderColor: "rgba(150,150,150,1)",
+    borderRadius: 9,
+    borderStyle: "solid",
+    alignSelf: 'center',
+    marginTop: 20
+  },
+  phoneNum: {
+    fontFamily: "roboto-regular",
+    color: "#121212",
+    height: 39,
+    width: 300,
+    borderWidth: 1,
+    borderColor: "rgba(150,150,150,1)",
+    borderRadius: 9,
+    borderStyle: "solid",
+    alignSelf: 'center',
+    marginTop: 20
+  },
+  address: {
+    fontFamily: "roboto-regular",
+    color: "#121212",
+    height: 39,
+    width: 300,
+    borderWidth: 1,
+    borderColor: "rgba(150,150,150,1)",
+    borderRadius: 9,
+    borderStyle: "solid",
+    alignSelf: 'center',
+    marginTop: 20
+  },
+  username: {
+    fontFamily: "roboto-regular",
+    color: "#121212",
+    height: 39,
+    width: 300,
+    borderWidth: 1,
+    borderColor: "rgba(150,150,150,1)",
+    borderRadius: 9,
+    borderStyle: "solid",
+    alignSelf: 'center',
+    marginTop: 20
+  },
+  password: {
+    fontFamily: "roboto-regular",
+    color: "#121212",
+    height: 39,
+    width: 300,
+    borderWidth: 1,
+    borderColor: "rgba(150,150,150,1)",
+    borderRadius: 9,
+    borderStyle: "solid",
+    alignSelf: 'center',
+    marginTop: 20
+  },
+  confirmPass:{
+    fontFamily: "roboto-regular",
+    color: "#121212",
+    height: 39,
+    width: 300,
+    borderWidth: 1,
+    borderColor: "rgba(150,150,150,1)",
+    borderRadius: 9,
+    borderStyle: "solid",
+    alignSelf: 'center',
+    marginTop: 20
+  },
+  button: {
+    width: 300,
+    height: 43,
     shadowColor: "rgba(0,0,0,1)",
     shadowOffset: {
       width: 3,
@@ -406,100 +555,27 @@ const styles = StyleSheet.create({
     backgroundColor: "#e48f24",
     borderRadius: 8,
     overflow: "hidden",
+    marginTop: 20,
     alignSelf: 'center'
   },
-  register: {
-    top: "85.99%",
-    position: "absolute",
+  login4: {
     fontFamily: "roboto-regular",
     color: "rgba(255,255,255,1)",
-    left: 149
+    marginTop: 13,
+    alignSelf: 'center'
   },
-  newHere1: {
-    top: "93.66%",
-    position: "absolute",
-    fontFamily: "roboto-regular",
-    color: "#121212",
-    fontSize: 15,
-    left: "8.61%"
+  haveAnAccount: {
+    marginRight: 5
   },
-  register1: {
-    top: "93.66%",
-    position: "absolute",
-    fontFamily: "roboto-700",
-    color: "#121212",
-    fontSize: 15,
-    left: "31.39%"
+  labelContainer: {
+    flex: 1, 
+    flexDirection: 'row',
+    marginHorizontal: 35,
+    marginTop: 20,
+    marginBottom: 20
   },
-  username2: {
-    top: "36.55%",
-    position: "absolute",
-    fontFamily: "roboto-regular",
-    color: "#121212",
-    height: "6.35%",
-    width: "82.77%",
-    borderWidth: 1,
-    borderColor: "rgba(150,150,150,1)",
-    borderRadius: 9,
-    borderStyle: "solid",
-    fontSize: 16,
-    left: "8.61%"
-  },
-  username3: {
-    top: "45.33%",
-    position: "absolute",
-    fontFamily: "roboto-regular",
-    color: "#121212",
-    height: "6.35%",
-    width: "82.77%",
-    borderWidth: 1,
-    borderColor: "rgba(150,150,150,1)",
-    borderRadius: 9,
-    borderStyle: "solid",
-    fontSize: 16,
-    left: "8.76%"
-  },
-  username4: {
-    top: "54.52%",
-    position: "absolute",
-    fontFamily: "roboto-regular",
-    color: "#121212",
-    height: "6.35%",
-    width: "82.77%",
-    borderWidth: 1,
-    borderColor: "rgba(150,150,150,1)",
-    borderRadius: 9,
-    borderStyle: "solid",
-    fontSize: 16,
-    left: "8.61%"
-  },
-  username5: {
-    top: "63.97%",
-    position: "absolute",
-    fontFamily: "roboto-regular",
-    color: "#121212",
-    height: "6.35%",
-    width: "82.77%",
-    borderWidth: 1,
-    borderColor: "rgba(150,150,150,1)",
-    borderRadius: 9,
-    borderStyle: "solid",
-    fontSize: 16,
-    left: "8.61%"
-  },
-  username6: {
-    top: "73.3%",
-    position: "absolute",
-    fontFamily: "roboto-regular",
-    color: "#121212",
-    height: "6.35%",
-    width: "82.77%",
-    borderWidth: 1,
-    borderColor: "rgba(150,150,150,1)",
-    borderRadius: 9,
-    borderStyle: "solid",
-    fontSize: 16,
-    left: "8.61%"
+  loginLabel: {
+    fontWeight: 'bold'
   }
 });
 

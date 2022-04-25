@@ -45,7 +45,7 @@ const TransactionHistory = () => {
                     <View style={styles.rect3}></View>
                     <Text style={styles.serviceName}>{item.service_name}</Text>
                     <Text style={styles.customerName}>{item.customer_fname} {item.customer_lname}</Text>
-                    <Text style={styles.dateAndTime}>{item.pack_date} {item.pack_time}</Text>
+                    <Text style={styles.dateAndTime}>{item.pack_date}</Text>
                     <Text style={styles.address}>{item.pack_address}</Text>
                     <Text style={styles.caterer}>{item.cat_name}</Text>
                 </View>
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     left: 63,
     position: "absolute",
     fontFamily: "roboto-regular",
-    color: "#121212"
+    color: "#e48f24"
   },
   price: {
     top: 144,

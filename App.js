@@ -30,7 +30,7 @@ const Auth = () => {
           headerStyle: {
             backgroundColor: '#e48f24',
           },
-          headerShown: true,
+          headerShown: false,
           headerTintColor: '#fefefe',
           headerTitleStyle: {
             fontWeight: 'bold',

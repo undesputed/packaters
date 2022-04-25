@@ -1,7 +1,43 @@
-import React, { Component } from "react";
-import { StyleSheet, View, Image, Text } from "react-native";
+import React, { Component, useEffect, useState } from "react";
+import { StyleSheet, View, Image, Text, FlatList } from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-function ProfileScreen(props) {
+const ProfileScreen = ({navigation}) => {
+  
+  const [user, setUser] = useState([]);
+
+  
+  const retrieveData = async () => {
+    try {
+      const valueString = await AsyncStorage.getItem('user_id');
+      const value = valueString;
+      fetch('http://192.168.0.173:3000/api/user/user', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: value
+        }),
+      })
+        .then((response) => response.json())
+        .then((responseJson) => {
+          console.log(responseJson);
+          setUser(responseJson);
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect( () => {
+    retrieveData();
+  },[])
+
   return (
     <View style={styles.container}>
       <Image
@@ -10,13 +46,21 @@ function ProfileScreen(props) {
         style={styles.image}
       ></Image>
       <View style={styles.rect}>
-        <Text style={styles.carrieAYu}>Carrie A. Yu</Text>
-        <Text style={styles.fatimaUbayBohol}>Fatima, Ubay, Bohol</Text>
-        <Text style={styles.username}>username</Text>
-        <Text style={styles.password}>Password</Text>
-        <View style={styles.rect2}>
-          <Text style={styles.updatePassword}>Update Password</Text>
-        </View>
+        <FlatList
+          data={user}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({item}) => 
+            <View>
+              <Text style={styles.carrieAYu}>Name: {item.cust_name} {item.cust_lastname}</Text>
+              <Text style={styles.fatimaUbayBohol}>Address: {item.cust_address}</Text>
+              <Text style={styles.username}>Username: {item.username}</Text>
+              <Text style={styles.password}>Password: {item.password}</Text>
+              {/* <View style={styles.rect2}> */}
+                {/* <Text style={styles.updatePassword}>Update Password</Text> */}
+              {/* </View> */}
+            </View>
+          }
+        />
       </View>
     </View>
   );

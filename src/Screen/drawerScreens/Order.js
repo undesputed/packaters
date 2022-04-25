@@ -28,16 +28,22 @@ const Window = {
 const OrderScreen = ({route, navigation}) => {
   const [showModal, setShowModal] = useState(false);
   const [price, setPrice] = useState('');
-  const [status, setStatus] = useState('Pending');
   const [payment, setPayment] = useState([]);
   const [serviceId, setServiceId] = useState();
+  const [catererName, setCatererName] = useState('');
   const [services, setServices] = useState([]);
   const [customerId, setCustomerId] = useState();
   const [address, setAddress] = useState('');
-  const [time, setTime] = useState('');
+  const [packageName, setPackageName] = useState('');
+  const [customerFname, setCustomerFname] = useState('');
+  const [customerLname, setCustomerLname] = useState('');
+  const [catererId, setCatererId] = useState();
+  const [time, setTime] = useState(new Date());
   const [date, setDate] = useState(new Date());
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
+  const [dateButtonTitle, setDateButtonTitle] = useState('Set the Date');
+  const [timeButtonTitle, setTimeButtonTitle] = useState('Set the Time');
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -48,7 +54,10 @@ const OrderScreen = ({route, navigation}) => {
   };
 
   const handleConfirm = (date) => {
-    console.warn("A date has been picked: ", date);
+    setDate(date);
+    let tempDate = new Date(date);
+    let fDate = tempDate.getFullYear() + '-' + (tempDate.getMonth() + 1) + '-' + tempDate.getDate();
+    setDateButtonTitle(fDate);
     hideDatePicker();
   };
 
@@ -61,7 +70,17 @@ const OrderScreen = ({route, navigation}) => {
   }
 
   const handleTimeConfirm = (time) => {
-    console.log("A time has been picked: ", time);
+    
+    var actiondate = new Date(time);
+    var hours = actiondate.getHours();
+    var minutes = actiondate.getMinutes();
+    var ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    var currTime = hours + ':' + minutes + ' ' + ampm;
+    setTime(time);
+    setTimeButtonTitle(currTime);
     hideTimePicker();
   }
 
@@ -95,7 +114,9 @@ const OrderScreen = ({route, navigation}) => {
       })
         .then((response) => response.json())
         .then((responseJson) => {
-          setCustomerId(responseJson);
+          setCustomerId(responseJson[0].id);
+          setCustomerFname(responseJson[0].cust_name);
+          setCustomerLname(responseJson[0].cust_lastname);
         })
         .catch((error) => {
           console.log(error);
@@ -105,8 +126,52 @@ const OrderScreen = ({route, navigation}) => {
     }
   };
 
-  const onClickPlaceOrder = (id) => {
-    navigation.navigate('PaymentScreen', {service_id: id});
+  const onClickPlaceOrder = () => {
+    let tempDate = new Date(date);
+    let tempTime = new Date(time);
+    let fDate = tempDate.getFullYear() + '-' + (tempDate.getMonth() + 1) + '-' + tempDate.getDate();
+    let fTime = tempTime.getHours()+":"+tempTime.getMinutes()+":"+tempTime.getSeconds();
+    console.log(fDate);
+    console.log(fTime);
+    
+    navigation.navigate('PaymentScreen',{
+      package_name: packageName,
+      pack_address: address,
+      pack_date: fDate,
+      pack_time: fTime,
+      pack_caterer_id: catererId,
+      caterer_name: catererName,
+      customer_id: customerId,
+      customer_fname: customerFname,
+      customer_lname: customerLname,
+      package_id: route.params.service_id,
+      price: price
+    });
+
+
+    // fetch('http://192.168.0.173:3000/api/create/transaction', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Accept': 'application/json',
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify({
+        // package_name: packageName,
+        // pack_address: address,
+        // pack_date: fDate,
+        // pack_time: fTime,
+        // pack_caterer_id: catererId,
+        // customer_id: customerId,
+        // customer_fname: customerFname,
+        // customer_lname: customerLname,
+        // package_id: route.params.service_id,
+        // price: price
+    //   }),
+    // })
+    //   .then((response) => response.json())
+    //   .then((responseJson) => {
+
+    //   })
   }
 
   const onClickCancel = () => {
@@ -129,7 +194,7 @@ const OrderScreen = ({route, navigation}) => {
     })
       .then((response) => response.json())
       .then((responseJson) => {
-        console.log(responseJson[0].service_price);
+        // console.log(responseJson[0].service_price);
         setPrice(responseJson[0].service_price);
       })
       .catch((error) => {
@@ -148,9 +213,12 @@ const OrderScreen = ({route, navigation}) => {
         })
           .then((response) => response.json())
           .then((responseJson) => {
-            console.log(responseJson);
+            // console.log(responseJson);
+            setPackageName(responseJson[0].service_name);
             setServiceId(route.params.service_id);
             setServices(responseJson);
+            setCatererId(responseJson[0].cat_id);
+            setCatererName(responseJson[0].cat_name);
           })
           .catch((error) => {
             console.log(error);
@@ -181,19 +249,21 @@ const OrderScreen = ({route, navigation}) => {
               style={styles.addressInput}
             />
             <View style={styles.dateButton}>
-              <Button title="Set the Date" onPress={showDatePicker} color="#e48f24"/>
+              <Button title={dateButtonTitle} onPress={showDatePicker} color="#e48f24"/>
                 <DateTimePickerModal
                   isVisible={isDatePickerVisible}
-                  mode="date"
+                  mode='date'
                   onConfirm={handleConfirm}
                   onCancel={hideDatePicker}
+                  minimumDate={new Date()}
                 />
             </View>
             <View style={styles.timeButton}>
-              <Button title="Set the Time" onPress={showTimePIcker} color="#e48f24"/>
+              <Button title={timeButtonTitle} onPress={showTimePIcker} color="#e48f24"/>
                 <DateTimePickerModal
                   isVisible={isTimePickerVisible}
                   mode="time"
+                  locale='en_GB'
                   onConfirm={handleTimeConfirm}
                   onCancel={hideTimePicker}
                 />
@@ -205,50 +275,50 @@ const OrderScreen = ({route, navigation}) => {
           <TouchableOpacity style={styles.cancelContainer} onPress={() => onClickCancel()}>
             <Text style={styles.placeOrder}>CANCEL</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.placeOrderContainer} onPress={() => onClickPlaceOrder(serviceId)}>
+          <TouchableOpacity style={styles.placeOrderContainer} onPress={() => onClickPlaceOrder()}>
             <Text style={styles.placeOrder}>PLACE ODER</Text>
           </TouchableOpacity>
         </View>
-              {/* <ScrollView>
-                  <View style={{height: 5, width:Window.width}}/>
-                  <View style={styles.titleContainer}>
-                    <Text style={styles.yourParment}>Payment</Text>
+            {/* <ScrollView>
+                <View style={{height: 5, width:Window.width}}/>
+                <View style={styles.titleContainer}>
+                  <Text style={styles.yourParment}>Payment</Text>
+                </View>
+                <View style={{height: 5, width:Window.width}}/>
+                  <View style={styles.paymentContainer}>
+                      <Modal
+                          visible={showModal}
+                          onRequestClose={() => setShowModal(false)}
+                          animationType="slide"
+                      >
+                          <WebView source={{ uri: "http://192.168.0.173:3000/paypal"}}
+                              // onNavigationStateChange={() => onClickShowModal(data)}
+                              onNavigationStateChange={data => {
+                                // Keep track of going back navigation within component
+                                onClickShowModal(data)
+                              }}
+                              injectedJavaScript={`document.getElementById('price').value="`+price+`";document.f1.submit()`}
+                          />
+                      </Modal>
+                      <TouchableOpacity
+                          onPress={() => setShowModal(true)}
+                      >
+                      <Image
+                          style={{height: 100, width: 250,padding: 10}}
+                          source={require('../../Image/paypal.png')}
+                      />
+                      </TouchableOpacity>
                   </View>
                   <View style={{height: 5, width:Window.width}}/>
-                    <View style={styles.paymentContainer}>
-                        <Modal
-                            visible={showModal}
-                            onRequestClose={() => setShowModal(false)}
-                            animationType="slide"
-                        >
-                            <WebView source={{ uri: "http://192.168.0.173:3000/paypal"}}
-                                // onNavigationStateChange={() => onClickShowModal(data)}
-                                onNavigationStateChange={data => {
-                                  // Keep track of going back navigation within component
-                                  onClickShowModal(data)
-                                }}
-                                injectedJavaScript={`document.getElementById('price').value="`+price+`";document.f1.submit()`}
-                            />
-                        </Modal>
-                        <TouchableOpacity
-                            onPress={() => setShowModal(true)}
-                        >
-                        <Image
-                            style={{height: 100, width: 250,padding: 10}}
-                            source={require('../../Image/paypal.png')}
-                        />
-                        </TouchableOpacity>
-                    </View>
-                    <View style={{height: 5, width:Window.width}}/>
-                    <View style={styles.paymentContainer}>
-                        <TouchableOpacity>
-                        <Image
-                            style={{height: 100, width: 250,padding: 10}}
-                            source={require('../../Image/cod.png')}
-                        />
-                        </TouchableOpacity>
-                    </View>
-              </ScrollView> */}
+                  <View style={styles.paymentContainer}>
+                      <TouchableOpacity>
+                      <Image
+                          style={{height: 100, width: 250,padding: 10}}
+                          source={require('../../Image/cod.png')}
+                      />
+                      </TouchableOpacity>
+                  </View>
+            </ScrollView> */}
           </View>
     </SafeAreaView>
   );

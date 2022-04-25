@@ -34,7 +34,7 @@ const ServiceScreen = ({route, navigation}) => {
     })
       .then((response) => response.json())
       .then((responseJson) => {
-        console.log(responseJson);
+        // console.log(responseJson);
         setServiceId(route.params.service_id);
         setService(responseJson);
       })
@@ -54,7 +54,7 @@ const ServiceScreen = ({route, navigation}) => {
       })
         .then((response) => response.json())
         .then((responseJson) => {
-          console.log(responseJson);
+          // console.log(responseJson);
           setMenu(responseJson);
         })
         .catch((error) => {
