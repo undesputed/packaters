@@ -1,10 +1,9 @@
-import React, {useState, useEffect} from 'react';
-import {View, Text, SafeAreaView, FlatList, StyleSheet, TouchableOpacity, Image} from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { Component, useState, useEffect } from "react";
+import { StyleSheet, View, TouchableOpacity, Image, FlatList, SafeAreaView } from "react-native";
+import MaterialCard5 from "../../components/MaterialCard5";
 
 const HomeScreen = ({navigation}) => {
   const [services, setServices] = useState([]);
-  const [loading, setLoading] = useState(false);
 
   const onClickServices = (id) => {
     navigation.navigate('ServiceScreen', {service_id: id});
@@ -30,106 +29,43 @@ const HomeScreen = ({navigation}) => {
   }, []);
 
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <FlatList
-        data={services}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({item}) => 
-          <TouchableOpacity style={styles.card} onPress={() => onClickServices(item.id)}>
-            <Image
-              style={styles.thumb}
-              source={{uri:item.service_image}}
-            />
-            <View style={styles.infoContainer}>
-              <Text style={styles.name}>{item.service_name}</Text>
-              <Text style={styles.caterer}>Caterer: {item.cat_name}</Text>
-              <Text style={styles.price}>Price : $ {item.service_price}</Text>
-            </View>
-          </TouchableOpacity>
-        }
-      />
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={styles.container}>
+        <FlatList
+          data={services}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({item}) => 
+            <TouchableOpacity onPress={() => onClickServices(item.id)}>
+              <MaterialCard5 style={styles.materialCard5} item={item}></MaterialCard5>
+            </TouchableOpacity>
+        
+          }
+        />  
+      </View>
     </SafeAreaView>
   );
-};
-
-export default HomeScreen;
-
+}
 
 const styles = StyleSheet.create({
-  productsList: {
-    backgroundColor: '#eeeeee',
+  container: {
+    flex: 1
   },
-  productsListContainer: {
-    backgroundColor: '#eeeeee',
-    paddingVertical: 8,
-    marginHorizontal: 8,
-  },
-  card: {
-    backgroundColor: 'white',
-    borderRadius: 16,
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    shadowColor: 'black',
+  materialCard5: {
+    height: "59.86%",
+    width: "89.44%",
+    position: "absolute",
+    top: "4.3%",
+    borderRadius: 8,
+    shadowColor: "rgba(0,0,0,1)",
     shadowOffset: {
-      height: 0,
-      width: 0,
+      width: 3,
+      height: 3
     },
-    elevation: 1,
-    marginVertical: 20,
-  },
-  thumb: {
-    height: 260,
-    borderTopLeftRadius: 16,
-    borderTopRightRadius: 16,
-    width: '100%',
-  },
-  infoContainer: {
-    padding: 16,
-  },
-  name: {
-    fontSize: 22,
-    fontWeight: 'bold',
-  },
-  price: {
-    fontSize: 16,
-    fontWeight: '600',
-    marginBottom: 8,
-  },
-  card: {
-    backgroundColor: 'white',
-    margin: 10,
-    borderRadius: 16,
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    shadowColor: 'black',
-    shadowOffset: {
-      height: 2,
-      width: 2,
-    },
-    elevation: 1,
-    marginVertical: 20,
-  },
-  thumb: {
-    height: 260,
-    borderTopLeftRadius: 16,
-    borderTopRightRadius: 16,
-    width: '100%',
-  },
-  infoContainer: {
-    padding: 16,
-  },
-  name: {
-    fontSize: 22,
-    fontWeight: 'bold',
-  },
-  caterer: {
-    fontSize: 16,
-    fontWeight: '600',
-    marginBottom: 8,
-  }, 
-  price: {
-    fontSize: 16,
-    fontWeight: '600',
-    marginBottom: 8,
-  },
+    elevation: 5,
+    shadowOpacity: 0.21,
+    shadowRadius: 0,
+    left: 19
+  }
 });
+
+export default HomeScreen;

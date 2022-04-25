@@ -9,6 +9,8 @@ import RegisterScreen from './src/Screen/RegisterScreen';
 import DrawerNavigation from './src/Screen/DrawerNavigationRoutes';
 import ServiceScreen from './src/Screen/drawerScreens/ServiceScreen';
 import OrderScreen from './src/Screen/drawerScreens/Order';
+import TransactionScreen from './src/Screen/drawerScreens/TransactionForm';
+import PaymentScreen from './src/Screen/drawerScreens/Payment';
 
 const Stack = createStackNavigator();
 
@@ -16,7 +18,7 @@ const Auth = () => {
   return (
     <Stack.Navigator initialRouteName="LoginScreen">
       <Stack.Screen
-        name="LoginScreen"
+        name="LoginScreen"l
         component={LoginScreen}
         options={{headerShown: false}}
       />
@@ -26,9 +28,10 @@ const Auth = () => {
         options={{
           title: 'Register',
           headerStyle: {
-            backgroundColor: '#307ecc',
+            backgroundColor: '#e48f24',
           },
-          headerTintColor: '#fff',
+          headerShown: true,
+          headerTintColor: '#fefefe',
           headerTitleStyle: {
             fontWeight: 'bold',
           },
@@ -65,7 +68,17 @@ const App = () => {
         <Stack.Screen
           name="OrderScreen"
           component={OrderScreen}
-          options={{headerShown: true}}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="TransactionScreen"
+          component={TransactionScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="PaymentScreen"
+          component={PaymentScreen}
+          options={{ headerShown: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>
