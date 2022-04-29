@@ -45,7 +45,9 @@ const TransactionHistory = () => {
                     <View style={styles.rect3}></View>
                     <Text style={styles.serviceName}>{item.service_name}</Text>
                     <Text style={styles.customerName}>{item.customer_fname} {item.customer_lname}</Text>
-                    <Text style={styles.dateAndTime}>{item.pack_date}</Text>
+                    <Text style={styles.dateAndTime}>{
+                      new Date(item.pack_date).getFullYear() + '-' + (new Date(item.pack_date).getMonth() + 1) + '-' + new Date(item.pack_date).getDate()
+                    }</Text>
                     <Text style={styles.address}>{item.pack_address}</Text>
                     <Text style={styles.caterer}>{item.cat_name}</Text>
                 </View>
@@ -113,7 +115,7 @@ const styles = StyleSheet.create({
     left: 67,
     position: "absolute",
     fontFamily: "roboto-regular",
-    color: "#121212"
+    color: "#121212",
   },
   rect3: {
     flex: 0.5,

@@ -1,5 +1,5 @@
 import React, { Component, useState, useEffect } from "react";
-import { StyleSheet, View, Text, TouchableOpacity, Modal } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, Modal, Dimensions } from "react-native";
 import {WebView} from 'react-native-webview';
 import Icon from "react-native-vector-icons/FontAwesome";
 
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
   },
   rect: {
     top: 0,
-    width: '100%',
+    width: Dimensions.get('window').width,
     height: 301,
     position: "absolute",
     alignSelf: 'center',
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
   },
   rect3: {
     top: 265,
-    width: 312,
+    width: '90%',
     height: 357,
     position: "absolute",
     backgroundColor: "rgba(228,142,37,1)",
