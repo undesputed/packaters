@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
     borderRadius: 5
   },
   TextInput: {
-    color: 'black'
+    color: 'black',
   },
   loginLabel: {
     position: 'relative',

@@ -9,6 +9,7 @@ import NavigationDrawerHeader from './Component/NavigationDrawerHeader';
 import MenuScreen from './drawerScreens/MenuScreen';
 import TransactionHistoryScreen from './drawerScreens/TransactionHistory';
 import ProfileScreen from './drawerScreens/ProfileScreen';
+import CatererScreen from './drawerScreens/CatererScreen';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -119,6 +120,34 @@ const HomeScreenStack = ({navigation}) => {
     )
   }
 
+  const CatererScreenStack = ({navigation}) => {
+    return(
+      <Stack.Navigator 
+        initialRouteName='CatererScreenStack'
+        screenOptions={{ 
+          headerStyle:{
+            backgroundColor: '#e48f24',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+              fontWeight: 'bold',
+          }
+         }}>   
+          <Stack.Screen
+            name="CatererScreen"
+            component={CatererScreen}
+            options={{
+              title: 'Caterers', //Set Header Title
+              headerLeft: () => (
+                <NavigationDrawerHeader navigationProps={navigation} />
+            ),
+            }}
+          />
+      </Stack.Navigator>
+    )
+  }
+
+
   const DrawerNavigatorRoutes = (props) => {
     return (
       <Drawer.Navigator
@@ -141,6 +170,11 @@ const HomeScreenStack = ({navigation}) => {
           name="Menu"
           screenOptions={{drawerLabel: 'Menu Screen'}}
           component={MenuScreenStack}
+        />
+        <Drawer.Screen
+          name="Caterer"
+          screenOptions={{ drawerLabel: 'Caterer Screen' }}
+          component={CatererScreenStack}
         />
         <Drawer.Screen
           name="Transaction History"

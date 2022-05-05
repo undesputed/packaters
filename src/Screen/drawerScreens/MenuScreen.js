@@ -24,6 +24,7 @@ const MenuScreen = () =>{
                 <View style={styles.rect}>
                     <Text style={styles.menuName}>{item.menu_name}</Text>
                     <Text style={styles.menuName1}>{item.menu_details}</Text>
+                    <Text style={[item.status ? {color: 'red'} : {color : 'green'}, styles.status]}>{item.status ? 'Unavailable' : 'Available'}</Text>
                 </View>
             }
         />
@@ -65,6 +66,12 @@ const styles = StyleSheet.create({
     color: "#121212",
     marginTop: 9,
     marginLeft: 17
+  },
+  status: {
+    fontFamily: 'roboto-700',
+    letterSpacing: 2,
+    marginLeft: 17,
+    marginTop: 3
   }
 });
 
