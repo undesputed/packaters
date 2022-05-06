@@ -1,24 +1,39 @@
 import React, { Component, useEffect, useState } from "react";
-import { StyleSheet, View, Image, Text, FlatList } from "react-native";
+import { StyleSheet, View, Image, Text, FlatList, ToastAndroid, RefreshControl } from "react-native";
 import Svg, { Ellipse } from "react-native-svg";
 
 const TransactionHistory = () => {
     const [history, setHistory] = useState([]);
+    const [refreshing, setRefreshing] = useState(false);
+
+    const fetchTransactions = () => {
+      setRefreshing(false);
+      fetch('http://192.168.0.173:3000/api/retrieve/transactions')
+          .then((response) => response.json())
+          .then((responseJson) => {
+              console.log(responseJson);
+              setHistory(responseJson);
+          })
+          .catch((error) => console.log(error));
+    }
+
+    const onRefresh = React.useCallback(async () => {
+      setRefreshing(true);
+      fetchTransactions(false);
+      ToastAndroid.show('Updated', ToastAndroid.SHORT);
+    }, [refreshing])
 
     useEffect(() => {
-        fetch('http://192.168.0.173:3000/api/retrieve/transactions')
-            .then((response) => response.json())
-            .then((responseJson) => {
-                console.log(responseJson);
-                setHistory(responseJson);
-            })
-            .catch((error) => console.log(error));
+      fetchTransactions();
     },[])
   return (
     <View style={styles.container}>
         <FlatList
             data = {history}
             keyExtractor={(item, index) =>  index.toString()}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>
+            }
             renderItem={({item}) => 
                 <View style={styles.rect}>
                     <View style={styles.rect2}></View>

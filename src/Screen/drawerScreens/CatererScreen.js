@@ -7,22 +7,36 @@ import {
     Image,
     Alert,
     ScrollView,
-    FlatList
+    FlatList,
+    ToastAndroid,
+    RefreshControl
 } from 'react-native';
 
 const CatererScreen = ({navigation}) => {
     const [data, setData] = useState([]);
+    const [refreshing, setRefreshing] = useState(false);
+
+    const fetchCaterer = () => {
+      setRefreshing(false);
+      fetch('http://192.168.0.173:3000/api/retrieve/caterer')
+          .then((response) => response.json())
+          .then((responseJson) => {
+              console.log(responseJson);
+              setData(responseJson);
+          })
+          .catch((error) => {
+              console.log(error);
+          })
+    }
+
+    const onRefresh = React.useCallback(async () => {
+      setRefreshing(true);
+      fetchCaterer();
+      ToastAndroid.show('Updated', ToastAndroid.SHORT);
+    }, [refreshing])
 
     useEffect(() => {
-        fetch('http://192.168.0.173:3000/api/retrieve/caterer')
-            .then((response) => response.json())
-            .then((responseJson) => {
-                console.log(responseJson);
-                setData(responseJson);
-            })
-            .catch((error) => {
-                console.log(error);
-            })
+      fetchCaterer();
     },[])
 
     const onClickProfile = (id) => {
@@ -36,6 +50,9 @@ const CatererScreen = ({navigation}) => {
             data={data}
             horizontal={false}
             numColumns={2}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>
+            }
             keyExtractor= {(item) => {
                 return item.id;
             }}

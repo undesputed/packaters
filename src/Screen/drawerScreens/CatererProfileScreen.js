@@ -196,9 +196,9 @@ const ProfileScreen = ({navigation, route}) => {
                         <TouchableOpacity style={styles.userBtn} onPress={() => {setModalVisible(true)}}>
                         <Text style={styles.userBtnTxt}>Comment</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.userBtn} onPress={() => {}}>
+                        {/* <TouchableOpacity style={styles.userBtn} onPress={() => {}}>
                         <Text style={styles.userBtnTxt}>Rate</Text>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                     </View>
 
                     <View style={styles.userInfoWrapper}>
@@ -210,10 +210,10 @@ const ProfileScreen = ({navigation, route}) => {
                         <Text style={styles.userInfoTitle}>{totalComm}</Text>
                         <Text style={styles.userInfoSubTitle}>Comments</Text>
                     </View>
-                    <View style={styles.userInfoItem}>
+                    {/* <View style={styles.userInfoItem}>
                         <Text style={styles.userInfoTitle}>100</Text>
                         <Text style={styles.userInfoSubTitle}>Ratings</Text>
-                    </View>
+                    </View> */}
                     </View>
                 </ScrollView>
             );

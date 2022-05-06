@@ -21,6 +21,10 @@ const ServiceScreen = ({route, navigation}) => {
     navigation.navigate('HomeScreen');
   }
 
+  const onClickProfile = (id) => {
+    navigation.navigate('CatererProfileScreen', {caterer_id: id})
+  }
+
   useEffect(() => {
     fetch('http://192.168.0.173:3000/api/retrieve/services',{
       method: 'POST',
@@ -70,7 +74,9 @@ const ServiceScreen = ({route, navigation}) => {
         renderItem={({item}) => 
           <View>
             <MaterialCard5 style={styles.materialCard5} item={item}></MaterialCard5>
-            <MaterialCardWithImageAndTitle item={item}></MaterialCardWithImageAndTitle>
+            <TouchableOpacity onPress={() => onClickProfile(item.cat_id)}>
+              <MaterialCardWithImageAndTitle item={item}></MaterialCardWithImageAndTitle>
+            </TouchableOpacity>
               <View style={styles.menuContainer}>
                 <Text style={styles.menuTitle}>Menu List</Text>
                 <FlatList

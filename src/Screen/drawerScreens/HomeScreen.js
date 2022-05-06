@@ -1,22 +1,17 @@
 import React, { Component, useState, useEffect } from "react";
-import { StyleSheet, View, TouchableOpacity, Image, FlatList, SafeAreaView } from "react-native";
+import { StyleSheet, View, TouchableOpacity, Image, FlatList, SafeAreaView, RefreshControl, ToastAndroid } from "react-native";
 import MaterialCard5 from "../../components/MaterialCard5";
 
 const HomeScreen = ({navigation}) => {
   const [services, setServices] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
 
   const onClickServices = (id) => {
     navigation.navigate('ServiceScreen', {service_id: id});
   }
 
-  useEffect(() => {
-    // let get = AsyncStorage.getItem('user_id');
-    // if(get !== null){
-    //   navigation.replace('DrawerNavigationRoutes');
-    // }else{
-    //   navigation.replace('Auth');
-    // }
-
+  const fetchServices = () => {
+    setRefreshing(false);
     fetch('http://192.168.0.173:3000/api/retrieve/services')
         .then(response => response.json())
         .then((responseJson) => {
@@ -26,6 +21,16 @@ const HomeScreen = ({navigation}) => {
         .catch((error) => {
           console.log(error);
         });
+  }
+
+  const onRefresh = React.useCallback(async () => {
+    setRefreshing(true);
+    fetchServices();
+    ToastAndroid.show('Updated', ToastAndroid.SHORT);
+  }, [refreshing])
+
+  useEffect(() => {
+    fetchServices();
   }, []);
 
   return (
@@ -34,6 +39,9 @@ const HomeScreen = ({navigation}) => {
         <FlatList
           data={services}
           keyExtractor={(item, index) => index.toString()}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>
+          }
           renderItem={({item}) => 
             <TouchableOpacity onPress={() => onClickServices(item.id)}>
               <MaterialCard5 style={styles.materialCard5} item={item}></MaterialCard5>

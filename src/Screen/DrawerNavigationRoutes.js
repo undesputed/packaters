@@ -151,6 +151,7 @@ const HomeScreenStack = ({navigation}) => {
   const DrawerNavigatorRoutes = (props) => {
     return (
       <Drawer.Navigator
+        useLegacyImplementation={true}
         drawerContentOptions={{
           activeTintColor: '#cee1f2',
           color: '#cee1f2',

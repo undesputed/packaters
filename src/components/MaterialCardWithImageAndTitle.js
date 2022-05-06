@@ -4,25 +4,25 @@ import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
 const MaterialCardWithImageAndTitle = ({item}) => {
   return (
     <View style={[styles.container]}>
-      <Text style={styles.yourCaterer}>Your Caterer</Text>
-      <View style={styles.cardBody}>
-        <View style={styles.bodyContent}>
-          <Text style={styles.titleStyle}>{item.cat_name}</Text>
-          <Text style={styles.subtitleStyle}>{item.cat_address}</Text>
+        <Text style={styles.yourCaterer}>Your Caterer</Text>
+        <View style={styles.cardBody}>
+          <View style={styles.bodyContent}>
+            <Text style={styles.titleStyle}>{item.cat_name}</Text>
+            <Text style={styles.subtitleStyle}>{item.cat_address}</Text>
+          </View>
+          <Image
+            source={{ uri: item.cat_image }}
+            style={styles.cardItemImagePlace}
+          ></Image>
         </View>
-        <Image
-          source={{ uri: item.cat_image }}
-          style={styles.cardItemImagePlace}
-        ></Image>
-      </View>
-      <View style={styles.actionBody}>
-        <TouchableOpacity style={styles.actionButton1}>
-          <Text style={styles.actionText1}>{item.cat_details}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.actionButton2}>
-          <Text style={styles.actionText2}>{item.cat_contactno}</Text>
-        </TouchableOpacity>
-      </View>
+        <View style={styles.actionBody}>
+          <TouchableOpacity style={styles.actionButton1}>
+            <Text style={styles.actionText1}>{item.cat_details}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.actionButton2}>
+            <Text style={styles.actionText2}>{item.cat_contactno}</Text>
+          </TouchableOpacity>
+        </View>
     </View>
   );
 }

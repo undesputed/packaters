@@ -1,18 +1,30 @@
 import React, { Component, useEffect, useState } from "react";
-import { StyleSheet, View, Text, FlatList } from "react-native";
+import { StyleSheet, View, Text, FlatList, RefreshControl, ToastAndroid } from "react-native";
 
 const MenuScreen = () =>{
 
     const [menu, setMenu] = useState([]);
+    const [refreshing, setRefreshing] = useState(false);
+
+    const fetchMenu = () => {
+      setRefreshing(false);
+      fetch('http://192.168.0.173:3000/api/retrieve/menu')
+          .then((response) => response.json())
+          .then((responseJson) => {
+              console.log(responseJson);
+              setMenu(responseJson);
+          })
+          .catch((error) => { console.log(error); })
+    }
+
+    const onRefresh = React.useCallback(async () => {
+      setRefreshing(true);
+      fetchMenu();
+      ToastAndroid.show('Updated', ToastAndroid.SHORT);
+    },[refreshing])
 
     useEffect(() => {
-        fetch('http://192.168.0.173:3000/api/retrieve/menu')
-            .then((response) => response.json())
-            .then((responseJson) => {
-                console.log(responseJson);
-                setMenu(responseJson);
-            })
-            .catch((error) => { console.log(error); })
+      fetchMenu();
     },[])
 
   return (
@@ -20,6 +32,9 @@ const MenuScreen = () =>{
         <FlatList
             data = {menu}
             keyExtractor={(item, index) => index.toString()}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>
+            }
             renderItem={({item}) =>
                 <View style={styles.rect}>
                     <Text style={styles.menuName}>{item.menu_name}</Text>
