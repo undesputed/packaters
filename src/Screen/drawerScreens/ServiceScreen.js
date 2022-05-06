@@ -74,15 +74,16 @@ const ServiceScreen = ({route, navigation}) => {
               <View style={styles.menuContainer}>
                 <Text style={styles.menuTitle}>Menu List</Text>
                 <FlatList
-                  data={menu}
+                  data = {menu}
                   keyExtractor={(item, index) => index.toString()}
                   renderItem={({item}) =>
-                    <View>
-                      <Text>{item.menu_name}</Text>
-                      <Text>{item.menu_details}</Text>
-                    </View>
+                      <View style={styles.rect}>
+                          <Text style={styles.menuName}>{item.menu_name}</Text>
+                          <Text style={styles.menuName1}>{item.menu_details}</Text>
+                          <Text style={[item.status ? {color: 'red'} : {color : 'green'}, styles.status]}>{item.status ? 'Unavailable' : 'Available'}</Text>
+                      </View>
                   }
-                />
+              />
               </View>
           </View>
         }
@@ -102,21 +103,51 @@ const ServiceScreen = ({route, navigation}) => {
 export default ServiceScreen;
 
 const styles = StyleSheet.create({
-  menuContainer: {
-    margin: 5,
-    padding: 10,
-    backgroundColor: 'white',
+  rect: {
+    width: 356,
+    height: 133,
+    backgroundColor: "#E6E6E6",
     borderRadius: 8,
-    marginVertical: 10,
-    shadowColor: '#000',
-    shadowOffset: {width: 0, height: 4},
-    shadowOpacity: 0.23,
-    shadowRadius: 3,
-    elevation: 5
+    shadowColor: "rgba(0,0,0,1)",
+    shadowOffset: {
+      width: 3,
+      height: 3
+    },
+    elevation: 5,
+    shadowOpacity: 0.21,
+    shadowRadius: 0,
+    marginTop: 10,
+    marginBottom: 10,
+    alignSelf: 'center'
+  },
+  menuName: {
+    fontFamily: "roboto-700",
+    color: "#121212",
+    letterSpacing: 2,
+    marginTop: 34,
+    marginLeft: 17,
+    fontWeight: 'bold',
+    fontSize: 18
+  },
+  menuName1: {
+    fontFamily: "roboto-italic",
+    color: "#121212",
+    marginTop: 9,
+    marginBottom: 5,
+    marginLeft: 17
+  },
+  status: {
+    fontFamily: 'roboto-700',
+    letterSpacing: 2,
+    marginLeft: 17,
+    marginTop: 3
   },
   menuTitle: {
     fontSize: 25,
-    fontWeight: '600'
+    paddingTop: 10,
+    color: 'black',
+    fontWeight: 'bold',
+    alignSelf: 'center'
   },
   separator: {
     marginVertical: 8,

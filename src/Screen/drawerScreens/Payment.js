@@ -119,7 +119,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     alignSelf: 'center',
     backgroundColor: "rgba(201,217,233,1)",
-    left: 0,
     shadowColor: "rgba(0,0,0,1)",
     shadowOffset: {
       height: 7,
@@ -166,7 +165,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.31,
     shadowRadius: 0,
     borderRadius: 8,
-    alignSelf: 'center',
+    alignSelf: 'center'
   },
   rect4: {
     width: 147,
@@ -264,8 +263,8 @@ const styles = StyleSheet.create({
   },
   rect5: {
     top: 598,
-    left: 185,
-    width: 151,
+    alignSelf: 'flex-end',
+    width: '50%',
     height: 47,
     position: "absolute",
     borderRadius: 10,
@@ -277,20 +276,20 @@ const styles = StyleSheet.create({
     elevation: 5,
     shadowOpacity: 0.24,
     shadowRadius: 0,
-    backgroundColor: "rgba(23,155,215,1)"
+    backgroundColor: "rgba(23,155,215,1)",
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   payPal: {
     fontFamily: "roboto-700",
     color: "rgba(255,255,255,1)",
     fontSize: 22,
-    marginTop: 6,
-    marginLeft: 37,
     fontWeight: 'bold'
   },
   rect6: {
     top: 598,
-    left: 24,
-    width: 151,
+    alignSelf: 'flex-start',
+    width: '50%',
     height: 47,
     position: "absolute",
     borderRadius: 10,
@@ -302,18 +301,18 @@ const styles = StyleSheet.create({
     elevation: 5,
     shadowOpacity: 0.24,
     shadowRadius: 0,
-    backgroundColor: "white"
+    backgroundColor: "white",
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   payPal1: {
     fontFamily: "roboto-700",
     color: "gray",
     fontSize: 22,
-    marginTop: 6,
-    marginLeft: 37,
     fontWeight: 'bold'
   },
   rectStack: {
-    width: 360,
+    width: '100%',
     height: 645
   }
 });
