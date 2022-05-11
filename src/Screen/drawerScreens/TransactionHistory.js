@@ -1,14 +1,60 @@
 import React, { Component, useEffect, useState } from "react";
 import { StyleSheet, View, Image, Text, FlatList, ToastAndroid, RefreshControl } from "react-native";
 import Svg, { Ellipse } from "react-native-svg";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const TransactionHistory = () => {
     const [history, setHistory] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
+    const [customerId, setCustomerId] = useState('');
 
-    const fetchTransactions = () => {
+    useEffect(() => {
+      retrieveData();
+      fetchTransactions();
+    },[])
+
+    const retrieveData = async () => {
+      try {
+        setRefreshing(false);
+        const valueString = await AsyncStorage.getItem('user_id');
+        const value = valueString;
+        fetch('http://192.168.0.173:3000/api/user/user', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            username: value
+          }),
+        })
+          .then((response) => response.json())
+          .then((responseJson) => {
+            console.log(responseJson[0].id);
+            setCustomerId(responseJson[0].id);
+            fetchTransactions(responseJson[0].id);
+
+          })
+          .catch((error) => {
+            console.log(error);
+          })
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const fetchTransactions = (id) => {
       setRefreshing(false);
-      fetch('http://192.168.0.173:3000/api/retrieve/transactions')
+      fetch('http://192.168.0.173:3000/api/retrieve/transactions', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            id: id
+          }),
+      })
           .then((response) => response.json())
           .then((responseJson) => {
               console.log(responseJson);
@@ -19,13 +65,12 @@ const TransactionHistory = () => {
 
     const onRefresh = React.useCallback(async () => {
       setRefreshing(true);
-      fetchTransactions(false);
+      retrieveData();
+      // fetchTransactions(false);
       ToastAndroid.show('Updated', ToastAndroid.SHORT);
     }, [refreshing])
 
-    useEffect(() => {
-      fetchTransactions();
-    },[])
+    
   return (
     <View style={styles.container}>
         <FlatList
