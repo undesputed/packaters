@@ -12,6 +12,7 @@ import OrderScreen from './src/Screen/drawerScreens/Order';
 import TransactionScreen from './src/Screen/drawerScreens/TransactionForm';
 import PaymentScreen from './src/Screen/drawerScreens/Payment';
 import CatererProfileScreen from './src/Screen/drawerScreens/CatererProfileScreen';
+import ReScheduleScreen from './src/Screen/drawerScreens/ReScheduleScreen';
 
 const Stack = createStackNavigator();
 
@@ -80,6 +81,21 @@ const App = () => {
           name="PaymentScreen"
           component={PaymentScreen}
           options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ReScheduleScreen"
+          component={ReScheduleScreen}
+          options={{
+            title: 'Re-Schedule Order',
+            headerStyle: {
+              backgroundColor: '#e48f24',
+            },
+            headerShown: true,
+            headerTintColor: '#fefefe',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+          }}
         />
         <Stack.Screen
           name="CatererProfileScreen"

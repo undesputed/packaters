@@ -1,10 +1,12 @@
 import React, { Component, useEffect, useState } from "react";
-import { StyleSheet, View, Text, FlatList, RefreshControl, ToastAndroid } from "react-native";
+import { StyleSheet, View, Text, FlatList, RefreshControl, ToastAndroid, Modal, TouchableOpacity } from "react-native";
+import {WebView} from "react-native-webview";
 
 const MenuScreen = () =>{
 
     const [menu, setMenu] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
+    const [showModal, setShowModal] = useState(false);
 
     const fetchMenu = () => {
       setRefreshing(false);
@@ -29,6 +31,9 @@ const MenuScreen = () =>{
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity style={styles.followButton} onPress={() => setShowModal(true)}>
+        <Text style={styles.followButtonText}>Create Your Own Menu</Text>  
+      </TouchableOpacity>
         <FlatList
             data = {menu}
             keyExtractor={(item, index) => index.toString()}
@@ -43,6 +48,13 @@ const MenuScreen = () =>{
                 </View>
             }
         />
+        <Modal
+          visible={showModal}
+          onRequestClose={() => setShowModal(false)}
+          animationType="slide"
+          >
+              <WebView source={{ uri: "http://localhost/packaters/index.php/CustomerController/login_menu"}}/>
+          </Modal>
     </View>
   );
 }
@@ -87,7 +99,23 @@ const styles = StyleSheet.create({
     letterSpacing: 2,
     marginLeft: 17,
     marginTop: 3
-  }
+  },
+  followButton: {
+    marginTop:10,
+    height:35,
+    width:'80%',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius:10,
+    backgroundColor: "#e48f24",
+    alignSelf: 'center'
+    
+  },
+  followButtonText:{
+    color: "#FFFFFF",
+    fontSize:20,
+  },
 });
 
 export default MenuScreen;

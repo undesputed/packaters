@@ -4,7 +4,7 @@ import {WebView} from 'react-native-webview';
 import Icon from "react-native-vector-icons/FontAwesome";
 
 const Payment = ({route, navigation}) => {
-
+  
     const [showModal, setShowModal] = useState(false);
     const [payment, setPayment] = useState('');
     const [status, setStatus] = useState('Pending');

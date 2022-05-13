@@ -1,9 +1,9 @@
 import React, { Component, useEffect, useState } from "react";
-import { StyleSheet, View, Image, Text, FlatList, ToastAndroid, RefreshControl } from "react-native";
+import { StyleSheet, View, Image, Text, FlatList, ToastAndroid, RefreshControl, TouchableOpacity } from "react-native";
 import Svg, { Ellipse } from "react-native-svg";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const TransactionHistory = () => {
+const TransactionHistory = ({navigation}) => {
     const [history, setHistory] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
     const [customerId, setCustomerId] = useState('');
@@ -110,6 +110,9 @@ const TransactionHistory = () => {
                     }</Text>
                     <Text style={styles.address}>{item.pack_address}</Text>
                     <Text style={styles.caterer}>{item.cat_name}</Text>
+                    <TouchableOpacity style={styles.followButton} onPress={() => navigation.navigate('ReScheduleScreen', {transactionId : item.trans_id})}>
+                        <Text style={styles.followButtonText}>Re-Schedule</Text>  
+                      </TouchableOpacity>
                 </View>
             }
         />
@@ -139,7 +142,7 @@ const styles = StyleSheet.create({
     alignSelf: "center"
   },
   rect2: {
-    flex: 0.5,
+    flex: 1,
     backgroundColor: "rgba(219, 219, 219,1)"
   },
   ellipse: {
@@ -179,7 +182,7 @@ const styles = StyleSheet.create({
   },
   rect3: {
     flex: 0.5,
-    backgroundColor: "rgba(244, 244, 244,1)"
+    // backgroundColor: "rgba(244, 244, 244,1)"
   },
   serviceName: {
     top: 53,
@@ -215,7 +218,22 @@ const styles = StyleSheet.create({
     fontFamily: "roboto-regular",
     color: "#121212",
     left: 173
-  }
+  },
+  followButton: {
+    marginTop:10,
+    height:35,
+    width:140,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius:30,
+    backgroundColor: "#00BFFF",
+    
+  },
+  followButtonText:{
+    color: "#FFFFFF",
+    fontSize:20,
+  },
 });
 
 export default TransactionHistory;
