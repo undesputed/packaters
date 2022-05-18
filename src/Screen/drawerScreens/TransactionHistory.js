@@ -63,6 +63,20 @@ const TransactionHistory = ({navigation}) => {
           .catch((error) => console.log(error));
     }
 
+    const reSchedButton = (status) => {
+      if(status === "Completed") {
+        return (
+          <View></View>
+        )
+      }else {
+        return (
+          <TouchableOpacity style={styles.followButton} onPress={() => navigation.navigate('ReScheduleScreen', {transactionId : item.trans_id})}>
+            <Text style={styles.followButtonText}>Re-Schedule</Text>  
+          </TouchableOpacity>
+        )
+      }
+    } 
+
     const onRefresh = React.useCallback(async () => {
       setRefreshing(true);
       retrieveData();
@@ -110,9 +124,12 @@ const TransactionHistory = ({navigation}) => {
                     }</Text>
                     <Text style={styles.address}>{item.pack_address}</Text>
                     <Text style={styles.caterer}>{item.cat_name}</Text>
-                    <TouchableOpacity style={styles.followButton} onPress={() => navigation.navigate('ReScheduleScreen', {transactionId : item.trans_id})}>
-                        <Text style={styles.followButtonText}>Re-Schedule</Text>  
-                      </TouchableOpacity>
+                    {reSchedButton(item.statuses)}
+                    {/* <View>
+                        <TouchableOpacity style={styles.followButton} onPress={() => navigation.navigate('ReScheduleScreen', {transactionId : item.trans_id})}>
+                          <Text style={styles.followButtonText}>Re-Schedule</Text>  
+                        </TouchableOpacity>
+                    </View> */}
                 </View>
             }
         />
